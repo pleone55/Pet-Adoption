@@ -11,6 +11,10 @@ app.use(express.urlencoded({ extended: true }));
 
 require('./server/config/mongoose.config');
 
+app.use('/api/auth', require('./server/routes/auth.routes'));
+app.use('/api/pets', require('./server/routes/pet.routes'));
+app.use('/api/users', require('./server/routes/users.routes'));
+
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
