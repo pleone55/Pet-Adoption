@@ -7,7 +7,7 @@ import {
     CLEAR_ERRORS
 } from '../actions/types';
 
-const intitalState = {
+const intitialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: null,
     user: null,
@@ -15,7 +15,7 @@ const intitalState = {
     error: null
 };
 
-export default(state = intitalState, action) => {
+export default(state = intitialState, action) => {
     switch(action.type) {
         case LOGIN_SUCCESS:
             localStorage.setItem('token', action.payload.token);

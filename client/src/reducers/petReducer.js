@@ -26,7 +26,7 @@ export default(state = initialState, action) => {
                 pets: action.payload,
                 loading: false
             }
-        case GET_PETS:
+        case GET_PET:
             return {
                 ...state,
                 pets: action.payload,
@@ -44,7 +44,6 @@ export default(state = initialState, action) => {
                 loading: true
             }
         case PETS_ERROR:
-            console.log(action.payload);
             return {
                 ...state,
                 error: action.payload

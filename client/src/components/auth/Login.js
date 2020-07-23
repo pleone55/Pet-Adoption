@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loginUser, clearErrors } from '../../actions/authActions';
-import store from '../../store';
 
-const Login = (props, { clearErrors }) => {
-
-    const { isAuthenticated, error } = store;
+const Login = (props) => {
+    const { loginUser, clearErrors, isAuthenticated, error } = props;
 
     useEffect(() => {
-        if(isAuthenticated) {
+        if(isAuthenticated === true) {
             props.history.push('/');
         }
 
@@ -33,7 +31,10 @@ const Login = (props, { clearErrors }) => {
         if(email === '' || password === '') {
             console.log('Please fill in all fields');
         } else {
-            console.log(loginUser(user));
+            loginUser({
+                email, password
+            });
+            // props.history.push('/');
         }
     };
 
@@ -51,9 +52,16 @@ const Login = (props, { clearErrors }) => {
                     <label htmlFor="password">Password</label>
                     <input type="password" name="password" value={password} onChange={onChange} />
                 </div>
-                <input type="submit" value="Login" className="btn btn-primary btn-block" />
+                <input type="submit" value="Login" />
             </form>
         </div>
     );
 };
-export default connect(null, { loginUser })(Login);
+
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.auth.isAuthenticated,
+        error: state.auth.error
+    }
+}
+export default connect(mapStateToProps, { loginUser, clearErrors })(Login);

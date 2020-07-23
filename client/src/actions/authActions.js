@@ -9,8 +9,17 @@ import {
     CLEAR_ERRORS
 } from './types';
 
+export const intitialState = {
+    token: localStorage.getItem('token'),
+    isAuthenticated: null,
+    user: null,
+    loading: true,
+    error: null
+};
+
 //load user
 export const loadUser = () => async dispatch => {
+    //load token into global headers. Private Route.
     setAuthToken(localStorage.token);
 
     try {
@@ -27,7 +36,7 @@ export const loadUser = () => async dispatch => {
 };
 
 //login user
-export const loginUser = async(formData) => async dispatch => {
+export const loginUser = (formData) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -38,14 +47,15 @@ export const loginUser = async(formData) => async dispatch => {
         const res = await axios.post('http://localhost:4000/api/auth', formData, config);
         dispatch({
             type: LOGIN_SUCCESS,
-            payload: res.data
+            payload: res.data,
         });
 
-        loadUser();
+        dispatch(loadUser());
+
     } catch (err) {
         dispatch({
             type: LOGIN_FAIL,
-            payload: err.response.data.msg
+            payload: err.response.data
         });
     }
 };
