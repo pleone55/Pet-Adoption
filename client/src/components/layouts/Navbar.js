@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout, loadUser } from '../../actions/authActions';
+import { withRouter } from 'react-router-dom';
 
-const Navbar = (props) => {
-    const { isAuthenticated, logout, user, loadUser, title } = props;
+const Navbar = withRouter(({ isAuthenticated, logout, user, loadUser, title, history }) => {
 
     useEffect(() => {
         loadUser();
@@ -20,6 +20,9 @@ const Navbar = (props) => {
             <li>Welcome {user && user.name}</li>
             <li>
                 <a onClick={onLogout} href="#!">Logout</a>
+            </li>
+            <li>
+                {isAuthenticated ? <a href='/' onClick={() => history.push('/')}>Home</a> : null}
             </li>
         </>
     );
@@ -42,7 +45,7 @@ const Navbar = (props) => {
             </ul>
         </div>
     )
-};
+});
 
 const mapStateToProps = state => {
     return {

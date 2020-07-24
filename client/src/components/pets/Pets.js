@@ -4,8 +4,7 @@ import { getPets } from '../../actions/petActions';
 import Spinner from '../layouts/Spinner';
 import PetItem from './PetItem';
 
-const Pets = (props) => {
-    const { pets, loading, getPets, isAuthenticated } = props;
+const Pets = ({ pets, loading, getPets, isAuthenticated }) => {
 
     useEffect(() => {
         getPets();
