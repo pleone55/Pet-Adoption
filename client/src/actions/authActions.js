@@ -9,14 +9,6 @@ import {
     CLEAR_ERRORS
 } from './types';
 
-export const intitialState = {
-    token: localStorage.getItem('token'),
-    isAuthenticated: null,
-    user: null,
-    loading: true,
-    error: null
-};
-
 //load user
 export const loadUser = () => async dispatch => {
     //load token into global headers. Private Route.

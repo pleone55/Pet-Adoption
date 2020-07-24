@@ -1,9 +1,13 @@
-import React from 'react'
+import React from 'react';
+import Pets from '../pets/Pets';
+import AddPet from '../pets/AddPet';
 
 const Home = () => {
+
     return (
         <div>
-            <p>Hello</p>
+            <Pets />
+            <AddPet />
         </div>
     )
 }

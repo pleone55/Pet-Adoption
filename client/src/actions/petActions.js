@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
     GET_PETS,
     GET_PET,
@@ -16,17 +17,15 @@ export const getPets = () => async dispatch => {
     try {
         setLoading();
 
-        const res = await fetch('http://localhost:4000/api/pets');
-        const data = await res.json();
-
+        const res = await axios.get('http://localhost:4000/api/pets');
         dispatch({
             type: GET_PETS,
-            payload: data
+            payload: res.data
         });
     } catch (err) {
         dispatch({
             type: PETS_ERROR,
-            payload: err.response.data
+            payload: err.response.msg
         });
     }
 };
@@ -36,44 +35,41 @@ export const getPet = petId => async dispatch => {
     try {
         setLoading();
 
-        const res = await fetch(`http://localhost:4000/api/pets/${petId}`);
-        const data = await res.json();
+        const res = await axios.get(`http://localhost:4000/api/pets/${petId}`);
 
         dispatch({
             type: GET_PET,
-            payload: data
+            payload: res.data
         });
     } catch (err) {
         dispatch({
             type: PETS_ERROR,
-            payload: err.response.data
+            payload: err.response.msg
         });
     }
 };
 
 //add pet
 export const addPet = pet => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
     try {
         setLoading();
 
-        const res = await fetch('http://localhost:4000/api/pets', {
-            method: 'POST',
-            body: JSON.stringify(pet),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        const data = await res.json();
+        const res = await axios.post('http://localhost:4000/api/pets', pet, config);
 
         dispatch({
             type: ADD_PET,
-            payload: data
+            payload: res.data
         });
     } catch (err) {
         dispatch({
             type: PETS_ERROR,
-            payload: err.response.data
+            payload: err.response.msg
         });
     }
 };
